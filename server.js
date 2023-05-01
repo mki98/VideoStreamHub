@@ -30,15 +30,11 @@ mongoose.connect(DB,{
   console.log("DB connected...")
 })
 
-// mongoose.connection.once('open', function () {
-//   var gfs = Grid(mongoose.connection.db, mongoose.mongo);
-//   gfs.collection("uploads")
-// })
 
 
 
 app.use("/", appRouter);
 
 app.listen(8000, () => {
-  console.log("server is running...");
+  console.log("server is running on port 8000...");
 });

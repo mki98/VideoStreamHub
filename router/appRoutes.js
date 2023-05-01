@@ -9,14 +9,28 @@ router.get('',(req,res)=>{
 })
 router.post('/upload/',upload.single("file"),(req,res)=>{
     console.log("finished upload")
-    res.redirect('/')
+    console.log(req.file)
+    res.status(200).json({
+        fileId:req.file.id,
+    })
+    res.end()
 })
-router.get('/watch/',(req,res)=>{
-    res.render('video')
+router.get('/watch/:id',async (req,res)=>{
+
+    if(req.params.id && mongoose.isValidObjectId(req.params.id)){
+    const {id}= req.params
+    const  objID = new mongoose.Types.ObjectId(req.params.id)
+    const file = await mongoose.connection.collection("fs.files").findOne({_id:objID})
+    if(!file){
+        return res.status(404).send('<h1 style="color:red;"align="center">404</h1><h1 style="color:red;"align="center">File Not Found</h1>')
+    }
+    return res.render('view',{id,type:file.contentType})
+    }
+    res.status(400).send('<h1 style="color:red;"align="center">Not A Valid Parameter!</h1> ')
 })
 
 
-router.get('/videos/:id',async(req,res)=>{
+router.get('/file/:id',async(req,res)=>{
     
 console.log("in req")
     if(req.params.id && mongoose.isValidObjectId(req.params.id)){
@@ -26,9 +40,22 @@ console.log("in req")
     if(!vid){ 
         return res.status(404).send('<h1 style="color:red;"align="center">404</h1><h1 style="color:red;"align="center">File Not Found</h1>')
     }
+    if(vid.contentType !== "video/mp4"){
+        let gridfsBucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+            bucketName: 'fs'
+        });
+        const readStream = gridfsBucket.openDownloadStream(vid._id);
+        readStream.pipe(res)
+        return
+    }
     console.log("before wirte")
     const vidSize =vid.length
-    const start = Number(req.headers.range.replace(/\D/g,""))
+    let start;
+    if(Number(req.headers.range?.replace(/\D/g,""))){
+     start = Number(req.headers.range.replace(/\D/g,""))}
+    else{
+        start = 0
+    }
     const end = vidSize-1
     console.log("start=",start,"end=",end)
 
@@ -45,7 +72,7 @@ console.log("in req")
     });
         const readStream = gridfsBucket.openDownloadStream(vid._id,{
             start,
-            end:vidSize
+            end:vidSize,
         });
 //     let gfs=Grid(mongoose.connection.db,mongoose.mongo)
        readStream.pipe(res)
