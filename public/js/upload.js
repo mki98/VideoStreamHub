@@ -1,8 +1,17 @@
 const UploadForm = document.getElementById('upload-form')
 const progressWrapper = document.getElementById('progress-wrapper');
+const fileUpload = document.getElementById('file1');
 
 
-UploadForm.addEventListener('submit',async (e)=>{
+fileUpload.onchange= function readSingleFile(e) {
+    console.log(e)
+    const name = e.target.files[0].name;
+    document.getElementById("file-label").textContent = name;
+};
+
+
+
+UploadForm.onsubmit= async (e)=>{
     e.preventDefault();
     let file = document.getElementById("file1").files[0]
     console.log(file)
@@ -17,7 +26,7 @@ UploadForm.addEventListener('submit',async (e)=>{
                 },
             });
             alert('File uploaded successfully.');
-            progressWrapper.innerHTML = `<span>To view ur uploaded file click on the link below</span> <br> <a href="/watch/${res.data.fileId}" target="_blank">Click here to watch uploaded video</a> `;
+            progressWrapper.innerHTML = `<span>To view ur uploaded file click on the link below</span> <br> <a href="/watch/${res.data.fileId}" target="_blank">Click here</a> `;
         } catch (error) {
             console.error('Error uploading file:', error);
             alert('Failed to upload file.');
@@ -28,7 +37,7 @@ UploadForm.addEventListener('submit',async (e)=>{
         }
    
     }
-})
+}
 
 
 

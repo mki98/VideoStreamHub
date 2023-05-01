@@ -13,10 +13,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 m-auto">
-                <h1 class="my-4">Lets upload some stuff</h1>
+                <h1 class="my-4">Upload Your File</h1>
                 <form id="upload-form" enctype="multipart/form-data">
                     <div class="custom-file mb-3">
-                        <input type="file" class="custom-file-input" name="file" id="file1" onchange="readSingleFile(this.files)">
+                        <input type="file" class="custom-file-input" name="file" id="file1" >
                         <label class="custom-file-label" for="file1" id="file-label">Choose file</label>
                     </div>
                     <input type="submit" value="Submit" class="btn btn-primary btn-block">
@@ -34,10 +34,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js" integrity="sha512-nnNHpffPSgINrsR8ZAIgFUIMexORL5tPwsfktOTxVYSv+AUAILuFYWES8IHl+hhIhpFGlKvWFiz9ZEusrPcSBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="module" src="/js/upload.js"></script>
     <script>
-        function readSingleFile(e) {
-            const name = e[0].name;
-            document.getElementById("file-label").textContent = name;
-        }
+       
     </script>
 </body>
 

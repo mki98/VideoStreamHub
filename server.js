@@ -6,7 +6,6 @@ const appRouter = require("./router/appRoutes");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const cors = require("cors");
-const Grid = require("gridfs-stream")
 
 
 
@@ -21,6 +20,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
+
 const DB = process.env.DB;
 
 mongoose.connect(DB,{
