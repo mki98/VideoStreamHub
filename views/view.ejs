@@ -8,7 +8,8 @@
     <title>View Upload</title>
 </head>
 <body>
-    <h1 style="text-align: center;">Your uploaded file</h1>
+    
+      <h1 style="text-align: left;">Your uploaded file</h1>
     <% if (locals?.type.startsWith('video')) { %>
         <div class="video-container">
             <video src="/file/<%= locals?.id %>" controls></video>
