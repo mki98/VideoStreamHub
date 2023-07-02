@@ -9,7 +9,7 @@ I built this project to learn more about video buffering and streaming.
 To install the project, first clone the repository and navigate to the project directory. Then, install the necessary dependencies using npm:
 
 ```
-git clone https://github.com/*Your-Username*/VideoStreamHub.git
+git clone https://github.com/mki98/VideoStreamHub.git
 cd videoStreamHub
 npm install
 ```
